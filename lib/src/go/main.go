@@ -1,34 +1,20 @@
 package main
 
-/*
-typedef struct conf {
-    int color,
-	logLimit,
-	logLevel,
-	sourceMap,
-	sourceRoot,
-	sourcesContent,
-	target,
-	format,
-	globalName,
-	minify,
-	treeshaking;
-int loader;
-} cfg;
-typedef struct result{
-	*char code;
-	**char error;
-} res;
-*/
 import "C"
-import "github.com/evanw/esbuild/pkg/api"
+import (
+	"github.com/evanw/esbuild/pkg/api"
+	"github.com/google/flatbuffers/go"
+	"unsafe"
+)
 
 func main() {
 
 }
 
-func Transform(str *C.Char, conf *C.cfg) *C.res {
-	res := api.Transform(C.GoString(str), api.TransformOptions{
+func Transform(str *C.Char, bytes *C.Char, len C.int) *C.res {
+	bytes := C.GoBytes(unsafe.Pointer(bytes), len)
+	flatbuffers.
+		res := api.Transform(C.GoString(str), api.TransformOptions{
 		Color:             conf.color,
 		LogLimit:          conf.logLimit,
 		LogLevel:          conf.logLevel,
@@ -56,4 +42,5 @@ func Transform(str *C.Char, conf *C.cfg) *C.res {
 		Sourcefile:        "",
 		Loader:            0,
 	})
+	return res
 }
