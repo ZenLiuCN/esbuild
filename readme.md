@@ -41,11 +41,19 @@ public class Main {
                 .transformTarget(Target.ES2015)
                 .transformFormat(Format.ESModule)
                 .transform("export const a=1;");
-        System.out.println(result);
+       System.out.println(result);
     }
 }
 ```
 
 # NOTE
 
-this hasn't been well tested. use on your own risks.
+1. this hasn't been well tested. use on your own risks.
+2. current use global transform options, that means every configuration change immediately effect for later `transform`
+   execution.
+3. There use code from [native-utils](https://github.com/adamheinrich/native-utils) and do small modification for fetch
+   native library from Jar.
+
+# LICENSE
+
+Apache 2.0 
