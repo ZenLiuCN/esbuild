@@ -474,7 +474,9 @@ public interface EsBuild {
 
             return generatedDir;
         }
+
         //endregion
+
 
         public interface LibGo {
             void Debugger(int v);
@@ -895,11 +897,21 @@ public interface EsBuild {
         }
 
         static final LibGo instance;
+        final boolean IS_WINDOWS;
+        final boolean IS_MAC;
+        final boolean IS_UNIX;
+        final boolean IS_SOLARIS;
 
         static {
             try {
-                final String libname = System.mapLibraryName("esb");
-                instance = loadLibraryFromJar("/" + libname, p -> LibraryLoader.create(LibGo.class).load(p));
+                val OS = System.getProperty("os.name").toLowerCase();
+                IS_WINDOWS = (OS.contains("window"));
+                IS_MAC = (OS.contains("mac"));
+                IS_UNIX = (OS.contains("nix") || OS.contains("nux") || OS.indexOf("aix") > 0);
+                IS_SOLARIS = (OS.contains("sunos"));
+                val lib = System.mapLibraryName("esb");
+                val ext = lib.substring(lib.lastIndexOf(".") + 1);
+                instance = loadLibraryFromJar("/" + (IS_WINDOWS ? lib : ("esb" + "." + (IS_UNIX ? "linux" : "mac") + "." + ext)), p -> LibraryLoader.create(LibGo.class).load(p));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -914,6 +926,14 @@ public interface EsBuild {
         transformLoader(Loader.TS);
         transformTarget(Target.ES2015);
         transformFormat(Format.ESModule);
+        //Operating system name
+        System.out.println("Your OS name -> " + System.getProperty("os.name"));
+
+        //Operating system version
+        System.out.println("Your OS version -> " + System.getProperty("os.version"));
+
+        //Operating system architecture
+        System.out.println("Your OS Architecture -> " + System.getProperty("os.arch"));
         System.out.println(transform("export const a=1;"));
     }
 }
