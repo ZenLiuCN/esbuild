@@ -18,11 +18,11 @@ import (
 )
 
 var (
-	cache     = make(map[int]map[string]interface{})
-	transform = api.TransformOptions{}
+	cacheMangle = make(map[int]map[string]interface{})
+	transform   = api.TransformOptions{}
 	//build          = api.BuildOptions{}
-	debug          = false
-	cacheTransform = make(map[int]map[int]string)
+	debug       = false
+	cacheResult = make(map[int]map[int]string)
 )
 
 func main() {
@@ -45,9 +45,10 @@ func putCache(n int, res api.TransformResult) {
 		m[3] = string(res.Map)
 	}
 
-	cacheTransform[n] = m
+	cacheResult[n] = m
+	cacheMangle[n] = res.MangleCache
 	if debug {
-		log.Printf("cache of Transform ", cacheTransform)
+		log.Printf("cache result of Transform: %+v \n", cacheResult)
 	}
 }
 
@@ -59,22 +60,22 @@ func Debugger(n C.int) {
 //export GetResult
 func GetResult(n C.int, t C.int) *C.char {
 
-	if res, ok := cacheTransform[int(n)]; ok {
+	if res, ok := cacheResult[int(n)]; ok {
 		if debug {
 			log.Printf("found result for %d of %d as %s \n", n, t, res[int(t)])
 		}
 		return C.CString(res[int(t)])
 	}
 	if debug {
-		log.Printf("result missing of %d:%d with cache %+v \n", n, t, cacheTransform)
+		log.Printf("result missing of %d:%d with cacheMangle %+v \n", n, t, cacheResult)
 	}
 	return nil
 }
 
 //export EndSession
 func EndSession(n C.int) {
-	delete(cacheTransform, int(n))
-	delete(cache, int(n))
+	delete(cacheResult, int(n))
+	delete(cacheMangle, int(n))
 }
 
 //export Transform
@@ -154,7 +155,7 @@ func TransformGlobalName(v *C.char) {
 
 //export TransformMangleCache
 func TransformMangleCache(v C.int) {
-	transform.MangleCache = cache[int(v)]
+	transform.MangleCache = cacheMangle[int(v)]
 }
 
 //export TransformDrop

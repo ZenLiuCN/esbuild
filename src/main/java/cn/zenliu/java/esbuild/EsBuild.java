@@ -2,7 +2,6 @@ package cn.zenliu.java.esbuild;
 
 import jnr.ffi.LibraryLoader;
 import jnr.ffi.annotations.Encoding;
-import lombok.Value;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 
@@ -20,134 +19,6 @@ import java.util.function.Function;
  * @since 2022-03-02
  */
 public interface EsBuild {
-    enum Drop {
-        Default,
-        Console,
-        Debugger,
-        ;
-    }
-
-    enum TreeShaking {
-        Default,
-        TreeShakingFalse,
-        TreeShakingTrue,
-        ;
-    }
-
-    enum Charset {
-        Default,
-        ASCII,
-        UTF8,
-        ;
-    }
-
-    enum LogLevel {
-        Silent,
-        Verbose,
-        Debug,
-        Info,
-        Warning,
-        Error,
-        ;
-    }
-
-    enum StderrColor {
-        IfTerminal,
-        Never,
-        Always,
-        ;
-    }
-
-    enum EngineName {
-        Chrome,
-        Edge,
-        Firefox,
-        IE,
-        IOS,
-        Node,
-        Opera,
-        Safari,
-        ;
-    }
-
-    enum Format {
-        Default,
-        IIFE,
-        CommonJS,
-        ESModule,
-        ;
-    }
-
-    enum Platform {
-        Browser,
-        Node,
-        Neutral,
-        ;
-    }
-
-    enum Loader {
-        None,
-        JS,
-        JSX,
-        TS,
-        TSX,
-        JSON,
-        Text,
-        Base64,
-        DataURL,
-        File,
-        Binary,
-        CSS,
-        Default,
-
-
-        ;
-    }
-
-    enum Target {
-        Default,
-        ESNext,
-        ES5,
-        ES2015,
-        ES2016,
-        ES2017,
-        ES2018,
-        ES2019,
-        ES2020,
-        ES2021,
-        ;
-    }
-
-    enum JSXMode {
-        Transform,
-        Preserve,
-        ;
-    }
-
-    enum SourceMap {
-        None,
-        Inline,
-        Linked,
-        External,
-        InlineAndExternal,
-        ;
-    }
-
-    enum SourcesContent {
-        Include,
-        Exclude,
-        ;
-    }
-
-    enum LegalComments {
-        Default,
-        None,
-        Inline,
-        EndOfFile,
-        Linked,
-        External,
-        ;
-    }
 
 
     static void transformColor(StderrColor v) {
@@ -382,23 +253,12 @@ public interface EsBuild {
         return $.instance.getTransformLoader();
     }
 
-    @Value(staticConstructor = "of")
-    class TransformResult {
-        public String code;
-        public String map;
-        public String error;
-        public String warn;
-
+    static TransformResult transform(String code) {
+        return $.instance.transform(code);
     }
 
-    static TransformResult transform(String code) {
-        val ss = $.instance.Transform(code);
-        val error = $.instance.GetResult(ss, 0);
-        val warn = $.instance.GetResult(ss, 1);
-        val cc = $.instance.GetResult(ss, 2);
-        val map = $.instance.GetResult(ss, 3);
-        $.instance.EndSession(ss);
-        return TransformResult.of(cc, map, error, warn);
+    static $.EsBuildNative instance() {
+        return $.instance;
     }
 
     @UtilityClass
@@ -478,7 +338,7 @@ public interface EsBuild {
         //endregion
 
 
-        public interface LibGo {
+        public interface EsBuildNative {
             void Debugger(int v);
 
             //region TransformConfig
@@ -583,134 +443,165 @@ public interface EsBuild {
 
             void TransformLoader(int v);
 
-            default void transformColor(StderrColor v) {
+            default EsBuildNative transformColor(StderrColor v) {
                 TransformColor(v.ordinal());
+                return this;
             }
 
-            default void transformLogLimit(int v) {
+            default EsBuildNative transformLogLimit(int v) {
                 TransformLogLimit(v);
+                return this;
             }
 
-            default void transformLogLevel(LogLevel v) {
+            default EsBuildNative transformLogLevel(LogLevel v) {
                 TransformLogLevel(v.ordinal());
+                return this;
             }
 
-            default void transformSourceMap(SourceMap v) {
+            default EsBuildNative transformSourceMap(SourceMap v) {
                 TransformSourceMap(v.ordinal());
+                return this;
             }
 
-            default void transformSourceRoot(String v) {
+            default EsBuildNative transformSourceRoot(String v) {
                 TransformSourceRoot(v);
+                return this;
             }
 
-            default void transformSourceContent(SourcesContent v) {
+            default EsBuildNative transformSourceContent(SourcesContent v) {
                 TransformSourceContent(v.ordinal());
+                return this;
             }
 
-            default void transformTarget(Target v) {
+            default EsBuildNative transformTarget(Target v) {
                 TransformTarget(v.ordinal());
+                return this;
             }
 
-            default void transformEngine(List<Map.Entry<EngineName, String>> engines) {
+            default EsBuildNative transformEngine(List<Map.Entry<EngineName, String>> engines) {
                 TransformCleanEngine();
                 engines.forEach((k) -> {
                     TransformAddEngine(k.getKey().ordinal(), k.getValue());
                 });
+                return this;
 
             }
 
-            default void transformFormat(Format v) {
+            default EsBuildNative transformFormat(Format v) {
                 TransformFormat(v.ordinal());
+                return this;
             }
 
-            default void transformMangleProps(String v) {
+            default EsBuildNative transformMangleProps(String v) {
                 TransformMangleProps(v);
+                return this;
             }
 
-            default void transformGlobalName(String v) {
+            default EsBuildNative transformGlobalName(String v) {
                 TransformGlobalName(v);
+                return this;
             }
 
-            default void transformMangleCache(int v) {
+            default EsBuildNative transformMangleCache(int v) {
                 TransformMangleCache(v);
+                return this;
             }
 
-            default void transformDrop(Drop v) {
+            default EsBuildNative transformDrop(Drop v) {
                 TransformDrop(v.ordinal());
+                return this;
             }
 
-            default void transformMinifyWhitespace(boolean v) {
+            default EsBuildNative transformMinifyWhitespace(boolean v) {
                 TransformMinifyWhitespace(v ? 1 : 0);
+                return this;
             }
 
-            default void transformMinifyIdentifiers(boolean v) {
+            default EsBuildNative transformMinifyIdentifiers(boolean v) {
                 TransformMinifyIdentifiers(v ? 1 : 0);
+                return this;
             }
 
-            default void transformMinifySyntax(boolean v) {
+            default EsBuildNative transformMinifySyntax(boolean v) {
                 TransformMinifyIdentifiers(v ? 1 : 0);
+                return this;
             }
 
-            default void transformCharset(Charset v) {
+            default EsBuildNative transformCharset(Charset v) {
                 TransformCharset(v.ordinal());
+                return this;
             }
 
-            default void transformTreeShaking(TreeShaking v) {
+            default EsBuildNative transformTreeShaking(TreeShaking v) {
                 TransformTreeShaking(v.ordinal());
+                return this;
             }
 
-            default void transformIgnoreAnnotations(boolean v) {
+            default EsBuildNative transformIgnoreAnnotations(boolean v) {
                 TransformIgnoreAnnotations(v ? 1 : 0);
+                return this;
             }
 
-            default void transformLegalComments(LegalComments v) {
+            default EsBuildNative transformLegalComments(LegalComments v) {
                 TransformLegalComments(v.ordinal());
+                return this;
             }
 
-            default void transformJSXMode(JSXMode v) {
+            default EsBuildNative transformJSXMode(JSXMode v) {
                 TransformJSXMode(v.ordinal());
+                return this;
             }
 
-            default void transformJSXFactory(String v) {
+            default EsBuildNative transformJSXFactory(String v) {
                 TransformJSXFactory(v);
+                return this;
             }
 
-            default void transformJSXFragment(String v) {
+            default EsBuildNative transformJSXFragment(String v) {
                 TransformJSXFragment(v);
+                return this;
             }
 
-            default void transformTsconfigRaw(String v) {
+            default EsBuildNative transformTsconfigRaw(String v) {
                 TransformTsconfigRaw(v);
+                return this;
             }
 
-            default void transformBanner(String v) {
+            default EsBuildNative transformBanner(String v) {
                 TransformBanner(v);
+                return this;
             }
 
-            default void transformFooter(String v) {
+            default EsBuildNative transformFooter(String v) {
                 TransformFooter(v);
+                return this;
             }
 
-            default void transformAddDefine(Map<String, String> define) {
+            default EsBuildNative transformAddDefine(Map<String, String> define) {
                 TransformCleanDefine();
                 define.forEach(this::TransformAddDefine);
+                return this;
             }
 
-            default void transformPure(List<String> v) {
+            default EsBuildNative transformPure(List<String> v) {
                 TransformCleanPure();
                 v.forEach(this::TransformAddPure);
+                return this;
             }
 
-            default void transformKeepNames(boolean v) {
+            default EsBuildNative transformKeepNames(boolean v) {
                 TransformKeepNames(v ? 1 : 0);
+                return this;
             }
 
-            default void transformSourceFile(String v) {
+            default EsBuildNative transformSourceFile(String v) {
                 TransformSourceFile(v);
+                return this;
             }
 
-            default void transformLoader(Loader v) {
+            default EsBuildNative transformLoader(Loader v) {
                 TransformLoader(v.ordinal());
+                return this;
             }
 
             //endregion
@@ -888,6 +779,16 @@ public interface EsBuild {
             //endregion
 
 
+            default TransformResult transform(String code) {
+                val ss = Transform(code);
+                val error = GetResult(ss, 0);
+                val warn = GetResult(ss, 1);
+                val cc = GetResult(ss, 2);
+                val map = GetResult(ss, 3);
+                EndSession(ss);
+                return TransformResult.of(cc, map, error, warn);
+            }
+
             int Transform(@Encoding("UTF-8") String v);
 
             void EndSession(int session);
@@ -896,7 +797,7 @@ public interface EsBuild {
             String GetResult(int session, int type);
         }
 
-        static final LibGo instance;
+        static final EsBuildNative instance;
         final boolean IS_WINDOWS;
         final boolean IS_MAC;
         final boolean IS_UNIX;
@@ -911,14 +812,14 @@ public interface EsBuild {
                 IS_SOLARIS = (OS.contains("sunos"));
                 val lib = System.mapLibraryName("esb");
                 val ext = lib.substring(lib.lastIndexOf(".") + 1);
-                instance = loadLibraryFromJar("/" + (IS_WINDOWS ? lib : ("esb" + "." + (IS_UNIX ? "linux" : "mac") + "." + ext)), p -> LibraryLoader.create(LibGo.class).load(p));
+                instance = loadLibraryFromJar("/" + (IS_WINDOWS ? lib : ("esb" + "." + (IS_UNIX ? "linux" : "mac") + "." + ext)), p -> LibraryLoader.create(EsBuildNative.class).load(p));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
 //        $.instance.Debugger(1);
         transformMinifyIdentifiers(true);
         transformMinifySyntax(true);
@@ -935,5 +836,5 @@ public interface EsBuild {
         //Operating system architecture
         System.out.println("Your OS Architecture -> " + System.getProperty("os.arch"));
         System.out.println(transform("export const a=1;"));
-    }
+    }*/
 }
