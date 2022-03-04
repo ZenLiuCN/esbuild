@@ -10,16 +10,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Zen.Liu
  * @since 2022-03-02
  */
+@SuppressWarnings("unused")
 public interface EsBuild {
-
 
     static void transformColor(StderrColor v) {
         $.instance.transformColor(v);
@@ -338,8 +338,407 @@ public interface EsBuild {
         //endregion
 
 
+        @SuppressWarnings("unused")
         public interface EsBuildNative {
             void Debugger(int v);
+
+
+            //region BuildConfig
+
+
+            int GetBuildWatch();
+
+            default boolean getBuildWatch() {
+                return GetBuildWatch() == 1;
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildFooter();
+
+            default Map<String, String> getBuildFooter() {
+                val s = GetBuildFooter();
+                if (s.isEmpty()) return Collections.emptyMap();
+                return Arrays.stream(s.split(","))
+                        .sequential().map(x -> {
+                            val e = x.split("\\^");
+                            if (e.length != 2) return null;
+                            return new AbstractMap.SimpleEntry<>(e[0], e[1]);
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildBanner();
+
+            default Map<String, String> getBuildBanner() {
+                val s = GetBuildBanner();
+                if (s.isEmpty()) return Collections.emptyMap();
+                return Arrays.stream(s.split(","))
+                        .sequential().map(x -> {
+                            val e = x.split("\\^");
+                            if (e.length != 2) return null;
+                            return new AbstractMap.SimpleEntry<>(e[0], e[1]);
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildOutExtensions();
+
+            default Map<String, String> getBuildOutExtensions() {
+                val s = GetBuildOutExtensions();
+                if (s.isEmpty()) return Collections.emptyMap();
+                return Arrays.stream(s.split(","))
+                        .sequential().map(x -> {
+                            val e = x.split("\\^");
+                            if (e.length != 2) return null;
+                            return new AbstractMap.SimpleEntry<>(e[0], e[1]);
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            }
+
+            int GetBuildWrite();
+
+            default boolean getBuildWrite() {
+                return GetBuildWrite() == 1;
+            }
+
+            int GetBuildIncremental();
+
+            default boolean getBuildIncremental() {
+                return GetBuildIncremental() == 1;
+            }
+
+            int GetBuildAllowOverwrite();
+
+            default boolean getBuildAllowOverwrite() {
+                return GetBuildAllowOverwrite() == 1;
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildPublicPath();
+
+            @Encoding("UTF-8")
+            String GetBuildAssetNames();
+
+            @Encoding("UTF-8")
+            String GetBuildChunkNames();
+
+            @Encoding("UTF-8")
+            String GetBuildResolveExtensions();
+
+            default List<String> getBuildResolveExtensions() {
+                return Arrays.stream(GetBuildResolveExtensions().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildEntryPoints();
+
+            default List<String> getBuildEntryPoints() {
+                return Arrays.stream(GetBuildEntryPoints().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildNodePaths();
+
+            default List<String> getBuildNodePaths() {
+                return Arrays.stream(GetBuildNodePaths().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildInject();
+
+            default List<String> getBuildInject() {
+                return Arrays.stream(GetBuildInject().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildConditions();
+
+            default List<String> getBuildConditions() {
+                return Arrays.stream(GetBuildConditions().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildExternal();
+
+            default List<String> getBuildExternal() {
+                return Arrays.stream(GetBuildExternal().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildMainFields();
+
+            default List<String> getBuildMainFields() {
+                return Arrays.stream(GetBuildMainFields().split(","))
+                        .sequential()
+                        .filter(x -> !x.isEmpty())
+                        .collect(Collectors.toList());
+            }
+
+            int GetBuildBundle();
+
+            default boolean getBuildBundle() {
+                return GetBuildBundle() == 1;
+            }
+
+            int GetBuildPreserveSymlinks();
+
+            default boolean getBuildPreserveSymlinks() {
+                return GetBuildPreserveSymlinks() == 1;
+            }
+
+            int GetBuildSplitting();
+
+            default boolean getBuildSplitting() {
+                return GetBuildSplitting() == 1;
+            }
+
+            int GetBuildMetafile();
+
+            default boolean getBuildMetafile() {
+                return GetBuildMetafile() == 1;
+            }
+
+            @Encoding("UTF-8")
+            String GetBuildTsconfig();
+
+            @Encoding("UTF-8")
+            String GetBuildOutfile();
+
+            @Encoding("UTF-8")
+            String GetBuildAbsWorkingDir();
+
+            @Encoding("UTF-8")
+            String GetBuildOutDir();
+
+            @Encoding("UTF-8")
+            String GetBuildOutBase();
+
+
+            void BuildAddLoader(@Encoding("UTF-8") String k, int v);
+
+            void BuildRemoveLoader(@Encoding("UTF-8") String k);
+
+            void BuildCleanLoader();
+
+            void BuildWatch();
+
+            void BuildUnWatch();
+
+            void BuildAddFooter(@Encoding("UTF-8") String k, @Encoding("UTF-8") String v);
+
+            void BuildRemoveFooter(@Encoding("UTF-8") String k);
+
+            void BuildCleanFooter();
+
+            void BuildAddBanner(@Encoding("UTF-8") String k, @Encoding("UTF-8") String v);
+
+            void BuildRemoveBanner(@Encoding("UTF-8") String k);
+
+            void BuildCleanBanner();
+
+            void BuildAddOutExtensions(@Encoding("UTF-8") String k, @Encoding("UTF-8") String v);
+
+            void BuildRemoveOutExtensions(@Encoding("UTF-8") String k);
+
+            void BuildCleanOutExtensions();
+
+            void BuildAddEntryPointsAdvanced(@Encoding("UTF-8") String k, @Encoding("UTF-8") String v);
+
+            void BuildCleanEntryPointsAdvanced();
+
+            void BuildWrite(int v);
+
+            void BuildIncremental(int v);
+
+            void BuildAllowOverwrite(int v);
+
+            void BuildPublicPath(@Encoding("UTF-8") String v);
+
+            void BuildAssetNames(@Encoding("UTF-8") String v);
+
+            void BuildChunkNames(@Encoding("UTF-8") String v);
+
+            void BuildAddResolveExtensions(@Encoding("UTF-8") String v);
+
+            void BuildCleanResolveExtensions();
+
+            void BuildAddEntryPoints(@Encoding("UTF-8") String v);
+
+            void BuildCleanEntryPoints();
+
+            void BuildAddNodePaths(@Encoding("UTF-8") String v);
+
+            void BuildCleanNodePaths();
+
+            void BuildAddInject(@Encoding("UTF-8") String v);
+
+            void BuildCleanInject();
+
+            void BuildAddConditions(@Encoding("UTF-8") String v);
+
+            void BuildCleanConditions();
+
+            void BuildAddExternal(@Encoding("UTF-8") String v);
+
+            void BuildCleanExternal();
+
+            void BuildAddMainFields(@Encoding("UTF-8") String v);
+
+            void BuildCleanMainFields();
+
+            void BuildBundle(int v);
+
+            void BuildPreserveSymlinks(int v);
+
+            void BuildSplitting(int v);
+
+            void BuildMetafile(int v);
+
+            void BuildTsconfig(@Encoding("UTF-8") String v);
+
+            void BuildOutfile(@Encoding("UTF-8") String v);
+
+            void BuildAbsWorkingDir(@Encoding("UTF-8") String v);
+
+            void BuildOutDir(@Encoding("UTF-8") String v);
+
+            void BuildOutBase(@Encoding("UTF-8") String v);
+
+            void BuildColor(int color);
+
+            void BuildLogLimit(int logLimit);
+
+            void BuildLogLevel(int logLevel);
+
+            void BuildSourceMap(int sourceMap);
+
+            void BuildSourceRoot(@Encoding("UTF-8") String sourceRoot);
+
+            void BuildSourceContent(int sourceContent);
+
+            void BuildTarget(int target);
+
+            void BuildAddEngine(int engine, @Encoding("UTF-8") String version);
+
+            void BuildCleanEngine();
+
+            void BuildFormat(int format);
+
+            void BuildMangleProps(@Encoding("UTF-8") String mangleProps);
+
+            void BuildGlobalName(@Encoding("UTF-8") String v);
+
+            void BuildMangleCache(int v);
+
+            void BuildDrop(int v);
+
+            void BuildMinifyWhitespace(int v);
+
+            void BuildMinifyIdentifiers(int v);
+
+            void BuildMinifySyntax(int v);
+
+            void BuildCharset(int v);
+
+            void BuildTreeShaking(int v);
+
+            void BuildIgnoreAnnotations(int v);
+
+            void BuildLegalComments(int v);
+
+            void BuildJSXMode(int v);
+
+            void BuildJSXFactory(@Encoding("UTF-8") String v);
+
+            void BuildJSXFragment(@Encoding("UTF-8") String v);
+
+            void BuildBanner(@Encoding("UTF-8") String v);
+
+            void BuildFooter(@Encoding("UTF-8") String v);
+
+            void BuildAddDefine(@Encoding("UTF-8") String k, @Encoding("UTF-8") String v);
+
+            void BuildCleanDefine();
+
+            void BuildAddPure(@Encoding("UTF-8") String v);
+
+            void BuildCleanPure();
+
+            int BuildKeepNames();
+
+            int GetBuildColor();
+
+            int GetBuildLogLimit();
+
+            int GetBuildLogLevel();
+
+            int GetBuildSourceMap();
+
+            @Encoding("UTF-8")
+            String GetBuildSourceRoot();
+
+            int GetBuildSourceContent();
+
+            int GetBuildTarget();
+
+            int GetBuildFormat();
+
+            @Encoding("UTF-8")
+            String GetBuildMangleProps();
+
+            @Encoding("UTF-8")
+            String GetBuildGlobalName();
+
+            int GetBuildDrop();
+
+            int GetBuildMinifyWhitespace();
+
+            int GetBuildMinifyIdentifiers();
+
+            int GetBuildMinifySyntax();
+
+            int GetBuildCharset();
+
+            int GetBuildTreeShaking();
+
+            int GetBuildIgnoreAnnotations();
+
+            int GetBuildLegalComments();
+
+            int GetBuildJSXMode();
+
+            @Encoding("UTF-8")
+            String GetBuildJSXFactory();
+
+            @Encoding("UTF-8")
+            String GetBuildJSXFragment();
+
+
+            int GetBuildKeepNames();
+            //endregion
 
             //region TransformConfig
             void TransformColor(int color);
