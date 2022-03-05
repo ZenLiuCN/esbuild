@@ -7,6 +7,11 @@ var (
 	transform = api.TransformOptions{}
 )
 
+//export ResetTransform
+func ResetTransform() {
+	transform = api.TransformOptions{}
+}
+
 //export  TransformColor
 func TransformColor(color C.int) {
 	transform.Color = api.StderrColor(color)
@@ -171,9 +176,9 @@ func TransformCleanPure() {
 //export TransformKeepNames
 func TransformKeepNames() C.int {
 	if transform.KeepNames {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export TransformSourceFile
@@ -244,25 +249,25 @@ func GetTransformDrop() C.int {
 //export GetTransformMinifyWhitespace
 func GetTransformMinifyWhitespace() C.int {
 	if transform.MinifyWhitespace {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetTransformMinifyIdentifiers
 func GetTransformMinifyIdentifiers() C.int {
 	if transform.MinifyIdentifiers {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetTransformMinifySyntax
 func GetTransformMinifySyntax() C.int {
 	if transform.MinifySyntax {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetTransformCharset
@@ -278,9 +283,9 @@ func GetTransformTreeShaking() C.int {
 //export GetTransformIgnoreAnnotations
 func GetTransformIgnoreAnnotations() C.int {
 	if transform.IgnoreAnnotations {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetTransformLegalComments
@@ -322,9 +327,9 @@ func GetTransformFooter() *C.char {
 //export GetTransformKeepNames
 func GetTransformKeepNames() C.int {
 	if transform.KeepNames {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetTransformSourceFile

@@ -7,20 +7,20 @@ import (
 	"strings"
 )
 
-func putCache(n int, res api.TransformResult) {
-	m := make(map[int]string)
+func putTransformCache(n int, res api.TransformResult) {
+	m := make(map[CacheType]string)
 	if len(res.Warnings) > 0 {
-		m[0] = strings.Join(api.FormatMessages(res.Warnings, api.FormatMessagesOptions{}), "\n")
+		m[Code] = strings.Join(api.FormatMessages(res.Warnings, api.FormatMessagesOptions{}), "\n")
 
 	}
 	if len(res.Errors) > 0 {
-		m[1] = strings.Join(api.FormatMessages(res.Errors, api.FormatMessagesOptions{}), "\n")
+		m[Error] = strings.Join(api.FormatMessages(res.Errors, api.FormatMessagesOptions{}), "\n")
 	}
 	if len(res.Code) > 0 {
-		m[2] = string(res.Code)
+		m[Code] = string(res.Code)
 	}
 	if len(res.Map) > 0 {
-		m[3] = string(res.Map)
+		m[SourceMap] = string(res.Map)
 	}
 
 	cacheResult[n] = m
@@ -38,6 +38,6 @@ func Transform(str *C.char) C.int {
 	}
 	res := api.Transform(ced, transform)
 	n := newSession()
-	putCache(int(n), res)
+	putTransformCache(int(n), res)
 	return C.int(n)
 }

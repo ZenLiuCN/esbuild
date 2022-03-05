@@ -20,245 +20,875 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("unused")
 public interface EsBuild {
+    Build buildConfig = Build.$i;
+    Transform TransformConfig = Transform.$i;
 
-    static void transformColor(StderrColor v) {
-        $.instance.transformColor(v);
+    final class Build {
+        final static Build $i = new Build();
+
+        public Build reset() {
+            $.instance.ResetBuild();
+            return this;
+        }
+
+        public BuildResult build() {
+            return $.instance.build();
+        }
+
+        public boolean isWatch() {
+            return $.instance.getBuildWatch();
+        }
+
+        public Map<String, String> getFooter() {
+            return $.instance.getBuildFooter();
+        }
+
+        public Map<String, String> getBanner() {
+            return $.instance.getBuildBanner();
+        }
+
+        public Map<String, String> getOutExtensions() {
+            return $.instance.getBuildOutExtensions();
+        }
+
+        public boolean isWrite() {
+            return $.instance.getBuildWrite();
+        }
+
+        public boolean isIncremental() {
+            return $.instance.getBuildIncremental();
+        }
+
+        public boolean isAllowOverwrite() {
+            return $.instance.getBuildAllowOverwrite();
+        }
+
+        public String getPublicPath() {
+            return $.instance.GetBuildPublicPath();
+        }
+
+        public String getAssetNames() {
+            return $.instance.GetBuildAssetNames();
+        }
+
+        public String getChunkNames() {
+            return $.instance.GetBuildChunkNames();
+        }
+
+        public List<String> getResolveExtensions() {
+            return $.instance.getBuildResolveExtensions();
+        }
+
+        public List<String> getEntryPoints() {
+            return $.instance.getBuildEntryPoints();
+        }
+
+        public List<String> getNodePaths() {
+            return $.instance.getBuildNodePaths();
+        }
+
+        public List<String> getInject() {
+            return $.instance.getBuildInject();
+        }
+
+        public List<String> getConditions() {
+            return $.instance.getBuildConditions();
+        }
+
+        public List<String> getExternal() {
+            return $.instance.getBuildExternal();
+        }
+
+        public List<String> getMainFields() {
+            return $.instance.getBuildMainFields();
+        }
+
+
+        public boolean isBundle() {
+            return $.instance.getBuildBundle();
+        }
+
+        public boolean isPreserveSymlinks() {
+            return $.instance.getBuildPreserveSymlinks();
+        }
+
+        public boolean isSplitting() {
+            return $.instance.getBuildSplitting();
+        }
+
+
+        public boolean isMetafile() {
+            return $.instance.getBuildMetafile();
+        }
+
+        public String getTsconfig() {
+            return $.instance.GetBuildTsconfig();
+        }
+
+        public String getOutfile() {
+            return $.instance.GetBuildOutfile();
+        }
+
+        public String getAbsWorkingDir() {
+            return $.instance.GetBuildAbsWorkingDir();
+        }
+
+        public String getOutDir() {
+            return $.instance.GetBuildOutDir();
+        }
+
+        public String getOutBase() {
+            return $.instance.GetBuildOutBase();
+        }
+
+        public Build addLoader(String k, Loader v) {
+            $.instance.BuildAddLoader(k, v.ordinal());
+            return this;
+        }
+
+        public Build removeLoader(String k) {
+            $.instance.BuildRemoveLoader(k);
+            return this;
+        }
+
+        public Build cleanLoader() {
+            $.instance.BuildCleanLoader();
+            return this;
+        }
+
+        public Build setWatch(boolean v) {
+            if (v) $.instance.BuildWatch();
+            else $.instance.BuildUnWatch();
+            return this;
+        }
+
+
+        public Build addFooter(String k, String v) {
+            $.instance.BuildAddFooter(k, v);
+            return this;
+        }
+
+        public Build removeFooter(String k) {
+            $.instance.BuildRemoveFooter(k);
+            return this;
+        }
+
+        public Build cleanFooter() {
+            $.instance.BuildCleanFooter();
+            return this;
+        }
+
+        public Build aBanner(String k, String v) {
+            $.instance.BuildAddBanner(k, v);
+            return this;
+        }
+
+        public Build removeBanner(String k) {
+            $.instance.BuildRemoveBanner(k);
+            return this;
+        }
+
+        public Build cleanBanner() {
+            $.instance.BuildCleanBanner();
+            return this;
+        }
+
+        public Build addOutExtensions(String k, String v) {
+            $.instance.BuildAddOutExtensions(k, v);
+            return this;
+        }
+
+        public Build removeOutExtensions(String k) {
+            $.instance.BuildRemoveOutExtensions(k);
+            return this;
+        }
+
+        public Build cleanOutExtensions() {
+            $.instance.BuildCleanOutExtensions();
+            return this;
+        }
+
+        public Build addEntryPointsAdvanced(String k, String v) {
+            $.instance.BuildAddEntryPointsAdvanced(k, v);
+            return this;
+        }
+
+        public Build cleanEntryPointsAdvanced() {
+            $.instance.BuildCleanEntryPointsAdvanced();
+            return this;
+        }
+
+        public Build setWrite(boolean v) {
+            $.instance.BuildWrite(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setIncremental(boolean v) {
+            $.instance.BuildIncremental(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setAllowOverwrite(boolean v) {
+            $.instance.BuildAllowOverwrite(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setPublicPath(String v) {
+            $.instance.BuildPublicPath(v);
+            return this;
+        }
+
+        public Build setAssetNames(String v) {
+            $.instance.BuildAssetNames(v);
+            return this;
+        }
+
+        public Build setChunkNames(String v) {
+            $.instance.BuildChunkNames(v);
+            return this;
+        }
+
+        public Build addResolveExtensions(String v) {
+            $.instance.BuildAddResolveExtensions(v);
+            return this;
+        }
+
+        public Build cleanResolveExtensions() {
+            $.instance.BuildCleanResolveExtensions();
+            return this;
+        }
+
+        public Build addEntryPoints(String v) {
+            $.instance.BuildAddEntryPoints(v);
+            return this;
+        }
+
+        public Build cleanEntryPoints() {
+            $.instance.BuildCleanEntryPoints();
+            return this;
+        }
+
+        public Build addNodePaths(String v) {
+            $.instance.BuildAddNodePaths(v);
+            return this;
+        }
+
+        public Build cleanNodePaths() {
+            $.instance.BuildCleanNodePaths();
+            return this;
+        }
+
+        public Build addInject(String v) {
+            $.instance.BuildAddInject(v);
+            return this;
+        }
+
+        public Build cleanInject() {
+            $.instance.BuildCleanInject();
+            return this;
+        }
+
+        public Build addConditions(String v) {
+            $.instance.BuildAddConditions(v);
+            return this;
+        }
+
+        public Build cleanConditions() {
+            $.instance.BuildCleanConditions();
+            return this;
+        }
+
+        public Build addExternal(String v) {
+            $.instance.BuildAddExternal(v);
+            return this;
+        }
+
+        public Build cleanExternal() {
+            $.instance.BuildCleanExternal();
+            return this;
+        }
+
+        public Build addMainFields(String v) {
+            $.instance.BuildAddMainFields(v);
+            return this;
+        }
+
+        public Build cleanMainFields() {
+            $.instance.BuildCleanMainFields();
+            return this;
+        }
+
+        public Build setBundle(boolean v) {
+            $.instance.BuildBundle(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setPreserveSymlinks(boolean v) {
+            $.instance.BuildPreserveSymlinks(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setSplitting(boolean v) {
+            $.instance.BuildSplitting(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setMetafile(boolean v) {
+            $.instance.BuildMetafile(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setTsconfig(String v) {
+            $.instance.BuildTsconfig(v);
+            return this;
+        }
+
+        public Build setOutfile(String v) {
+            $.instance.BuildOutfile(v);
+            return this;
+        }
+
+        public Build setAbsWorkingDir(String v) {
+            $.instance.BuildAbsWorkingDir(v);
+            return this;
+        }
+
+        public Build setOutDir(String v) {
+            $.instance.BuildOutDir(v);
+            return this;
+        }
+
+        public Build setOutBase(String v) {
+            $.instance.BuildOutBase(v);
+            return this;
+        }
+
+        public Build setColor(StderrColor v) {
+            $.instance.BuildColor(v.ordinal());
+            return this;
+        }
+
+        public Build setLogLimit(int v) {
+            $.instance.BuildLogLimit(v);
+            return this;
+        }
+
+        public Build setLogLevel(LogLevel v) {
+            $.instance.BuildLogLevel(v.ordinal());
+            return this;
+        }
+
+        public Build setSourceMap(boolean v) {
+            $.instance.BuildSourceMap(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setSourceRoot(String v) {
+            $.instance.BuildSourceRoot(v);
+            return this;
+        }
+
+        public Build setSourceContent(SourcesContent v) {
+            $.instance.BuildSourceContent(v.ordinal());
+            return this;
+        }
+
+        public Build setTarget(Target v) {
+            $.instance.BuildTarget(v.ordinal());
+            return this;
+        }
+
+        public Build addEngine(EngineName engine, String version) {
+            $.instance.BuildAddEngine(engine.ordinal(), version);
+            return this;
+        }
+
+        public Build cleanEngine() {
+            $.instance.BuildCleanEngine();
+            return this;
+        }
+
+        public Build setFormat(Format v) {
+            $.instance.BuildFormat(v.ordinal());
+            return this;
+        }
+
+        public Build setMangleProps(String v) {
+            $.instance.BuildMangleProps(v);
+            return this;
+        }
+
+        public Build setGlobalName(String v) {
+            $.instance.BuildGlobalName(v);
+            return this;
+        }
+
+        public Build setMangleCache(int v) {
+            $.instance.BuildMangleCache(v);
+            return this;
+        }
+
+        public Build setDrop(Drop v) {
+            $.instance.BuildDrop(v.ordinal());
+            return this;
+        }
+
+        public Build setMinifyWhitespace(boolean v) {
+            $.instance.BuildMinifyWhitespace(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setMinifyIdentifiers(boolean v) {
+            $.instance.BuildMinifyIdentifiers(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setMinifySyntax(boolean v) {
+            $.instance.BuildMinifySyntax(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setCharset(Charset v) {
+            $.instance.BuildCharset(v.ordinal());
+            return this;
+        }
+
+        public Build setTreeShaking(TreeShaking v) {
+            $.instance.BuildTreeShaking(v.ordinal());
+            return this;
+        }
+
+        public Build setIgnoreAnnotations(boolean v) {
+            $.instance.BuildIgnoreAnnotations(v ? 1 : 0);
+            return this;
+        }
+
+        public Build setLegalComments(LegalComments v) {
+            $.instance.BuildLegalComments(v.ordinal());
+            return this;
+        }
+
+        public Build setJSXMode(JSXMode v) {
+            $.instance.BuildJSXMode(v.ordinal());
+            return this;
+        }
+
+        public Build setJSXFactory(String v) {
+            $.instance.BuildJSXFactory(v);
+            return this;
+        }
+
+        public Build setJSXFragment(String v) {
+            $.instance.BuildJSXFragment(v);
+            return this;
+        }
+
+        public Build setBanner(String v) {
+            $.instance.BuildBanner(v);
+            return this;
+        }
+
+        public Build setFooter(String v) {
+            $.instance.BuildFooter(v);
+            return this;
+        }
+
+        public Build addDefine(String k, String v) {
+            $.instance.BuildAddDefine(k, v);
+            return this;
+        }
+
+        public Build cleanDefine() {
+            $.instance.BuildCleanDefine();
+            return this;
+        }
+
+        public Build addPure(String v) {
+            $.instance.BuildAddPure(v);
+            return this;
+        }
+
+        public Build cleanPure() {
+            $.instance.BuildCleanPure();
+            return this;
+        }
+
+        public boolean isKeepNames() {
+            return $.instance.BuildKeepNames() == 1;
+        }
+
+        public StderrColor getColor() {
+            return StderrColor.values()[$.instance.GetBuildColor()];
+        }
+
+        public int getLogLimit() {
+            return $.instance.GetBuildLogLimit();
+        }
+
+        public LogLevel getLogLevel() {
+            return LogLevel.values()[$.instance.GetBuildLogLevel()];
+        }
+
+        public boolean isSourceMap() {
+            return 1 == $.instance.GetBuildSourceMap();
+        }
+
+        public String getSourceRoot() {
+            return $.instance.GetBuildSourceRoot();
+        }
+
+        public SourcesContent getSourceContent() {
+            return SourcesContent.values()[$.instance.GetBuildSourceContent()];
+        }
+
+        public Target getTarget() {
+            return Target.values()[$.instance.GetBuildTarget()];
+        }
+
+        public Format getFormat() {
+            return Format.values()[$.instance.GetBuildFormat()];
+        }
+
+        public String getMangleProps() {
+            return $.instance.GetBuildMangleProps();
+        }
+
+        public String getGlobalName() {
+            return $.instance.GetBuildGlobalName();
+        }
+
+        public Drop getDrop() {
+            return Drop.values()[$.instance.GetBuildDrop()];
+        }
+
+        public boolean isMinifyWhitespace() {
+            return 1 == $.instance.GetBuildMinifyWhitespace();
+        }
+
+        public boolean isMinifyIdentifiers() {
+            return 1 == $.instance.GetBuildMinifyIdentifiers();
+        }
+
+        public boolean isMinifySyntax() {
+            return 1 == $.instance.GetBuildMinifySyntax();
+        }
+
+        public Charset getCharset() {
+            return Charset.values()[$.instance.GetBuildCharset()];
+        }
+
+        public TreeShaking getTreeShaking() {
+            return TreeShaking.values()[$.instance.GetBuildTreeShaking()];
+        }
+
+        public boolean isIgnoreAnnotations() {
+            return 1 == $.instance.GetBuildIgnoreAnnotations();
+        }
+
+        public LegalComments getLegalComments() {
+            return LegalComments.values()[$.instance.GetBuildLegalComments()];
+        }
+
+        public JSXMode getJSXMode() {
+            return JSXMode.values()[$.instance.GetBuildJSXMode()];
+        }
+
+        public String getBuildJSXFactory() {
+            return $.instance.GetBuildJSXFactory();
+        }
+
+        public String getBuildJSXFragment() {
+            return $.instance.GetBuildJSXFragment();
+        }
+
+        public boolean isBuildKeepNames() {
+            return $.instance.GetBuildKeepNames() == 1;
+        }
     }
 
-    static void transformLogLimit(int v) {
-        $.instance.transformLogLimit(v);
+    final class Transform {
+        final static Transform $i = new Transform();
+
+        public TransformResult transform(String code) {
+            return $.instance.transform(code);
+        }
+
+        public Transform reset() {
+            $.instance.ResetTransform();
+            return this;
+        }
+
+        public Transform setColor(StderrColor v) {
+            $.instance.transformColor(v);
+            return this;
+        }
+
+        public Transform setLogLimit(int v) {
+            $.instance.transformLogLimit(v);
+            return this;
+        }
+
+        public Transform setLogLevel(LogLevel v) {
+            $.instance.transformLogLevel(v);
+            return this;
+        }
+
+        public Transform setSourceMap(SourceMap v) {
+            $.instance.transformSourceMap(v);
+            return this;
+        }
+
+        public Transform setSourceRoot(String v) {
+            $.instance.transformSourceRoot(v);
+            return this;
+        }
+
+        public Transform setSourceContent(SourcesContent v) {
+            $.instance.transformSourceContent(v);
+            return this;
+        }
+
+        public Transform setTarget(Target v) {
+            $.instance.transformTarget(v);
+            return this;
+        }
+
+        public Transform setEngine(List<Map.Entry<EngineName, String>> v) {
+            $.instance.transformEngine(v);
+            return this;
+        }
+
+        public Transform setFormat(Format v) {
+            $.instance.transformFormat(v);
+            return this;
+        }
+
+        public Transform setMangleProps(String v) {
+            $.instance.transformMangleProps(v);
+            return this;
+        }
+
+        public Transform setGlobalName(String v) {
+            $.instance.transformGlobalName(v);
+            return this;
+        }
+
+        public Transform setMangleCache(int v) {
+            $.instance.transformMangleCache(v);
+            return this;
+        }
+
+        public Transform setDrop(Drop v) {
+            $.instance.transformDrop(v);
+            return this;
+        }
+
+        public Transform setMinifyWhitespace(boolean v) {
+            $.instance.transformMinifyWhitespace(v);
+            return this;
+        }
+
+        public Transform setMinifyIdentifiers(boolean v) {
+            $.instance.transformMinifyIdentifiers(v);
+            return this;
+        }
+
+        public Transform setMinifySyntax(boolean v) {
+            $.instance.transformMinifySyntax(v);
+            return this;
+        }
+
+        public Transform setCharset(Charset v) {
+            $.instance.transformCharset(v);
+            return this;
+        }
+
+        public Transform setTreeShaking(TreeShaking v) {
+            $.instance.transformTreeShaking(v);
+            return this;
+        }
+
+        public Transform setIgnoreAnnotations(boolean v) {
+            $.instance.transformIgnoreAnnotations(v);
+            return this;
+        }
+
+        public Transform setLegalComments(LegalComments v) {
+            $.instance.transformLegalComments(v);
+            return this;
+        }
+
+        public Transform setJSXMode(JSXMode v) {
+            $.instance.transformJSXMode(v);
+            return this;
+        }
+
+        public Transform setJSXFactory(String v) {
+            $.instance.transformJSXFactory(v);
+            return this;
+        }
+
+        public Transform setJSXFragment(String v) {
+            $.instance.transformJSXFragment(v);
+            return this;
+        }
+
+        public Transform setTsconfigRaw(String v) {
+            $.instance.transformTsconfigRaw(v);
+            return this;
+        }
+
+        public Transform setBanner(String v) {
+            $.instance.transformBanner(v);
+            return this;
+        }
+
+        public Transform setFooter(String v) {
+            $.instance.transformFooter(v);
+            return this;
+        }
+
+        public Transform setAddDefine(Map<String, String> v) {
+            $.instance.transformAddDefine(v);
+            return this;
+        }
+
+        public Transform setPure(List<String> v) {
+            $.instance.transformPure(v);
+            return this;
+        }
+
+        public Transform setKeepNames(boolean v) {
+            $.instance.transformKeepNames(v);
+            return this;
+        }
+
+        public Transform setSourceFile(String v) {
+            $.instance.transformSourceFile(v);
+            return this;
+        }
+
+        public Transform setLoader(Loader v) {
+            $.instance.transformLoader(v);
+            return this;
+        }
+
+        public StderrColor getColor() {
+            return $.instance.getTransformColor();
+        }
+
+        public int getLogLimit() {
+            return $.instance.getTransformLogLimit();
+        }
+
+        public LogLevel getLogLevel() {
+            return $.instance.getTransformLogLevel();
+        }
+
+        public SourceMap getSourceMap() {
+            return $.instance.getTransformSourceMap();
+        }
+
+        public String getSourceRoot() {
+            return $.instance.getTransformSourceRoot();
+        }
+
+        public SourcesContent getSourceContent() {
+            return $.instance.getTransformSourceContent();
+        }
+
+        public Target getTarget() {
+            return $.instance.getTransformTarget();
+        }
+
+        public Format getFormat() {
+            return $.instance.getTransformFormat();
+        }
+
+        public String getMangleProps() {
+            return $.instance.getTransformMangleProps();
+        }
+
+        public String getGlobalName() {
+            return $.instance.getTransformGlobalName();
+        }
+
+        public Drop getDrop() {
+            return $.instance.getTransformDrop();
+        }
+
+        public boolean isMinifyWhitespace() {
+            return $.instance.getTransformMinifyWhitespace();
+        }
+
+        public boolean isMinifyIdentifiers() {
+            return $.instance.getTransformMinifyIdentifiers();
+        }
+
+        public boolean isMinifySyntax() {
+            return $.instance.getTransformMinifySyntax();
+        }
+
+        public Charset getCharset() {
+            return $.instance.getTransformCharset();
+        }
+
+        public TreeShaking getTreeShaking() {
+            return $.instance.getTransformTreeShaking();
+        }
+
+        public boolean isIgnoreAnnotations() {
+            return $.instance.getTransformIgnoreAnnotations();
+        }
+
+        public LegalComments getLegalComments() {
+            return $.instance.getTransformLegalComments();
+        }
+
+        public JSXMode getJSXMode() {
+            return $.instance.getTransformJSXMode();
+        }
+
+        public String getJSXFactory() {
+            return $.instance.getTransformJSXFactory();
+        }
+
+        public String getJSXFragment() {
+            return $.instance.getTransformJSXFragment();
+        }
+
+        public String getTsconfigRaw() {
+            return $.instance.getTransformTsconfigRaw();
+        }
+
+        public String getBanner() {
+            return $.instance.getTransformBanner();
+        }
+
+        public String getFooter() {
+            return $.instance.getTransformFooter();
+        }
+
+        public boolean isKeepNames() {
+            return $.instance.getTransformKeepNames();
+        }
+
+        public String getSourceFile() {
+            return $.instance.getTransformSourceFile();
+        }
+
+        public Loader getLoader() {
+            return $.instance.getTransformLoader();
+        }
     }
 
-    static void transformLogLevel(LogLevel v) {
-        $.instance.transformLogLevel(v);
-    }
-
-    static void transformSourceMap(SourceMap v) {
-        $.instance.transformSourceMap(v);
-    }
-
-    static void transformSourceRoot(String v) {
-        $.instance.transformSourceRoot(v);
-    }
-
-    static void transformSourceContent(SourcesContent v) {
-        $.instance.transformSourceContent(v);
-    }
-
-    static void transformTarget(Target v) {
-        $.instance.transformTarget(v);
-    }
-
-    static void transformEngine(List<Map.Entry<EngineName, String>> v) {
-        $.instance.transformEngine(v);
-    }
-
-    static void transformFormat(Format v) {
-        $.instance.transformFormat(v);
-    }
-
-    static void transformMangleProps(String v) {
-        $.instance.transformMangleProps(v);
-    }
-
-    static void transformGlobalName(String v) {
-        $.instance.transformGlobalName(v);
-    }
-
-    static void transformMangleCache(int v) {
-        $.instance.transformMangleCache(v);
-    }
-
-    static void transformDrop(Drop v) {
-        $.instance.transformDrop(v);
-    }
-
-    static void transformMinifyWhitespace(boolean v) {
-        $.instance.transformMinifyWhitespace(v);
-    }
-
-    static void transformMinifyIdentifiers(boolean v) {
-        $.instance.transformMinifyIdentifiers(v);
-    }
-
-    static void transformMinifySyntax(boolean v) {
-        $.instance.transformMinifySyntax(v);
-    }
-
-    static void transformCharset(Charset v) {
-        $.instance.transformCharset(v);
-    }
-
-    static void transformTreeShaking(TreeShaking v) {
-        $.instance.transformTreeShaking(v);
-    }
-
-    static void transformIgnoreAnnotations(boolean v) {
-        $.instance.transformIgnoreAnnotations(v);
-    }
-
-    static void transformLegalComments(LegalComments v) {
-        $.instance.transformLegalComments(v);
-    }
-
-    static void transformJSXMode(JSXMode v) {
-        $.instance.transformJSXMode(v);
-    }
-
-    static void transformJSXFactory(String v) {
-        $.instance.transformJSXFactory(v);
-    }
-
-    static void transformJSXFragment(String v) {
-        $.instance.transformJSXFragment(v);
-    }
-
-    static void transformTsconfigRaw(String v) {
-        $.instance.transformTsconfigRaw(v);
-    }
-
-    static void transformBanner(String v) {
-        $.instance.transformBanner(v);
-    }
-
-    static void transformFooter(String v) {
-        $.instance.transformFooter(v);
-    }
-
-    static void transformAddDefine(Map<String, String> v) {
-        $.instance.transformAddDefine(v);
-    }
-
-    static void transformPure(List<String> v) {
-        $.instance.transformPure(v);
-    }
-
-    static void transformKeepNames(boolean v) {
-        $.instance.transformKeepNames(v);
-    }
-
-    static void transformSourceFile(String v) {
-        $.instance.transformSourceFile(v);
-    }
-
-    static void transformLoader(Loader v) {
-        $.instance.transformLoader(v);
-    }
-
-    static StderrColor getTransformColor() {
-        return $.instance.getTransformColor();
-    }
-
-    static int getTransformLogLimit() {
-        return $.instance.getTransformLogLimit();
-    }
-
-    static LogLevel getTransformLogLevel() {
-        return $.instance.getTransformLogLevel();
-    }
-
-    static SourceMap getTransformSourceMap() {
-        return $.instance.getTransformSourceMap();
-    }
-
-    static String getTransformSourceRoot() {
-        return $.instance.getTransformSourceRoot();
-    }
-
-    static SourcesContent getTransformSourceContent() {
-        return $.instance.getTransformSourceContent();
-    }
-
-    static Target getTransformTarget() {
-        return $.instance.getTransformTarget();
-    }
-
-    static Format getTransformFormat() {
-        return $.instance.getTransformFormat();
-    }
-
-    static String getTransformMangleProps() {
-        return $.instance.getTransformMangleProps();
-    }
-
-    static String getTransformGlobalName() {
-        return $.instance.getTransformGlobalName();
-    }
-
-    static Drop getTransformDrop() {
-        return $.instance.getTransformDrop();
-    }
-
-    static boolean getTransformMinifyWhitespace() {
-        return $.instance.getTransformMinifyWhitespace();
-    }
-
-    static boolean getTransformMinifyIdentifiers() {
-        return $.instance.getTransformMinifyIdentifiers();
-    }
-
-    static boolean getTransformMinifySyntax() {
-        return $.instance.getTransformMinifySyntax();
-    }
-
-    static Charset getTransformCharset() {
-        return $.instance.getTransformCharset();
-    }
-
-    static TreeShaking getTransformTreeShaking() {
-        return $.instance.getTransformTreeShaking();
-    }
-
-    static boolean getTransformIgnoreAnnotations() {
-        return $.instance.getTransformIgnoreAnnotations();
-    }
-
-    static LegalComments getTransformLegalComments() {
-        return $.instance.getTransformLegalComments();
-    }
-
-    static JSXMode getTransformJSXMode() {
-        return $.instance.getTransformJSXMode();
-    }
-
-    static String getTransformJSXFactory() {
-        return $.instance.getTransformJSXFactory();
-    }
-
-    static String getTransformJSXFragment() {
-        return $.instance.getTransformJSXFragment();
-    }
-
-    static String getTransformTsconfigRaw() {
-        return $.instance.getTransformTsconfigRaw();
-    }
-
-    static String getTransformBanner() {
-        return $.instance.getTransformBanner();
-    }
-
-    static String getTransformFooter() {
-        return $.instance.getTransformFooter();
-    }
-
-    static boolean getTransformKeepNames() {
-        return $.instance.getTransformKeepNames();
-    }
-
-    static String getTransformSourceFile() {
-        return $.instance.getTransformSourceFile();
-    }
-
-    static Loader getTransformLoader() {
-        return $.instance.getTransformLoader();
-    }
-
-    static TransformResult transform(String code) {
-        return $.instance.transform(code);
-    }
 
     static $.EsBuildNative instance() {
         return $.instance;
+    }
+
+    static void reset() {
+        $.instance.Reset();
     }
 
     @UtilityClass
@@ -340,11 +970,25 @@ public interface EsBuild {
 
         @SuppressWarnings("unused")
         public interface EsBuildNative {
+            char KeySplitter = 'Θ';
+            char ArraySplitter = ',';
+            String KeySplitterStr = KeySplitter + "";
+            String ArraySplitterStr = ArraySplitter + "";
+
+            enum ResultType {
+                Warn,
+                Error,
+                Code,
+                SourceMap,
+                Meta,
+                Output,
+            }
+
             void Debugger(int v);
 
 
             //region BuildConfig
-
+            void ResetBuild();
 
             int GetBuildWatch();
 
@@ -358,9 +1002,9 @@ public interface EsBuild {
             default Map<String, String> getBuildFooter() {
                 val s = GetBuildFooter();
                 if (s.isEmpty()) return Collections.emptyMap();
-                return Arrays.stream(s.split(","))
+                return Arrays.stream(s.split(ArraySplitterStr))
                         .sequential().map(x -> {
-                            val e = x.split("\\^");
+                            val e = x.split(KeySplitterStr);
                             if (e.length != 2) return null;
                             return new AbstractMap.SimpleEntry<>(e[0], e[1]);
                         })
@@ -374,9 +1018,9 @@ public interface EsBuild {
             default Map<String, String> getBuildBanner() {
                 val s = GetBuildBanner();
                 if (s.isEmpty()) return Collections.emptyMap();
-                return Arrays.stream(s.split(","))
+                return Arrays.stream(s.split(ArraySplitterStr))
                         .sequential().map(x -> {
-                            val e = x.split("\\^");
+                            val e = x.split(KeySplitterStr);
                             if (e.length != 2) return null;
                             return new AbstractMap.SimpleEntry<>(e[0], e[1]);
                         })
@@ -390,9 +1034,9 @@ public interface EsBuild {
             default Map<String, String> getBuildOutExtensions() {
                 val s = GetBuildOutExtensions();
                 if (s.isEmpty()) return Collections.emptyMap();
-                return Arrays.stream(s.split(","))
+                return Arrays.stream(s.split(ArraySplitterStr))
                         .sequential().map(x -> {
-                            val e = x.split("\\^");
+                            val e = x.split(KeySplitterStr);
                             if (e.length != 2) return null;
                             return new AbstractMap.SimpleEntry<>(e[0], e[1]);
                         })
@@ -431,7 +1075,7 @@ public interface EsBuild {
             String GetBuildResolveExtensions();
 
             default List<String> getBuildResolveExtensions() {
-                return Arrays.stream(GetBuildResolveExtensions().split(","))
+                return Arrays.stream(GetBuildResolveExtensions().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -441,7 +1085,7 @@ public interface EsBuild {
             String GetBuildEntryPoints();
 
             default List<String> getBuildEntryPoints() {
-                return Arrays.stream(GetBuildEntryPoints().split(","))
+                return Arrays.stream(GetBuildEntryPoints().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -451,7 +1095,7 @@ public interface EsBuild {
             String GetBuildNodePaths();
 
             default List<String> getBuildNodePaths() {
-                return Arrays.stream(GetBuildNodePaths().split(","))
+                return Arrays.stream(GetBuildNodePaths().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -461,7 +1105,7 @@ public interface EsBuild {
             String GetBuildInject();
 
             default List<String> getBuildInject() {
-                return Arrays.stream(GetBuildInject().split(","))
+                return Arrays.stream(GetBuildInject().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -471,7 +1115,7 @@ public interface EsBuild {
             String GetBuildConditions();
 
             default List<String> getBuildConditions() {
-                return Arrays.stream(GetBuildConditions().split(","))
+                return Arrays.stream(GetBuildConditions().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -481,7 +1125,7 @@ public interface EsBuild {
             String GetBuildExternal();
 
             default List<String> getBuildExternal() {
-                return Arrays.stream(GetBuildExternal().split(","))
+                return Arrays.stream(GetBuildExternal().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -491,7 +1135,7 @@ public interface EsBuild {
             String GetBuildMainFields();
 
             default List<String> getBuildMainFields() {
-                return Arrays.stream(GetBuildMainFields().split(","))
+                return Arrays.stream(GetBuildMainFields().split(ArraySplitterStr))
                         .sequential()
                         .filter(x -> !x.isEmpty())
                         .collect(Collectors.toList());
@@ -741,6 +1385,8 @@ public interface EsBuild {
             //endregion
 
             //region TransformConfig
+            void ResetTransform();
+
             void TransformColor(int color);
 
 
@@ -1003,8 +1649,7 @@ public interface EsBuild {
                 return this;
             }
 
-            //endregion
-            //region ReadConfig
+
             int GetTransformColor();
 
             int GetTransformLogLimit();
@@ -1180,20 +1825,46 @@ public interface EsBuild {
 
             default TransformResult transform(String code) {
                 val ss = Transform(code);
-                val error = GetResult(ss, 0);
-                val warn = GetResult(ss, 1);
-                val cc = GetResult(ss, 2);
-                val map = GetResult(ss, 3);
+                val error = getResult(ss, ResultType.Error);
+                val warn = getResult(ss, ResultType.Warn);
+                val cc = getResult(ss, ResultType.Code);
+                val map = getResult(ss, ResultType.SourceMap);
                 EndSession(ss);
                 return TransformResult.of(cc, map, error, warn);
             }
 
             int Transform(@Encoding("UTF-8") String v);
 
+            int Build();
+
+            default BuildResult build() {
+                val ss = Build();
+                val error = getResult(ss, ResultType.Error);
+                val warn = getResult(ss, ResultType.Warn);
+                val meta = getResult(ss, ResultType.Meta);
+                val output = getResult(ss, ResultType.Output);
+                val outFile = Arrays.stream(output.split(ArraySplitterStr)).sequential()
+                        .map(x -> {
+                            val ks = x.split(KeySplitterStr);
+                            if (ks.length != 2) return null;
+                            return new AbstractMap.SimpleEntry<>(ks[0], ks[1]);
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                EndSession(ss);
+                return BuildResult.of(outFile, meta, error, warn);
+            }
+
             void EndSession(int session);
+
+            void Reset();
 
             @Encoding("UTF-8")
             String GetResult(int session, int type);
+
+            default String getResult(int session, ResultType type) {
+                return GetResult(session, type.ordinal());
+            }
         }
 
         static final EsBuildNative instance;
@@ -1218,22 +1889,4 @@ public interface EsBuild {
         }
     }
 
-/*    public static void main(String[] args) {
-//        $.instance.Debugger(1);
-        transformMinifyIdentifiers(true);
-        transformMinifySyntax(true);
-        transformMinifyWhitespace(true);
-        transformLoader(Loader.TS);
-        transformTarget(Target.ES2015);
-        transformFormat(Format.ESModule);
-        //Operating system name
-        System.out.println("Your OS name -> " + System.getProperty("os.name"));
-
-        //Operating system version
-        System.out.println("Your OS version -> " + System.getProperty("os.version"));
-
-        //Operating system architecture
-        System.out.println("Your OS Architecture -> " + System.getProperty("os.arch"));
-        System.out.println(transform("export const a=1;"));
-    }*/
 }

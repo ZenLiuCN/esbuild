@@ -12,12 +12,17 @@ var (
 	}
 )
 
+//export ResetBuild
+func ResetBuild() {
+	build = api.BuildOptions{}
+}
+
 //export GetBuildWatch
 func GetBuildWatch() C.int {
 	if build.Watch == nil {
-		return C.int(0)
+		return False
 	}
-	return C.int(1)
+	return True
 }
 
 //export GetBuildFooter
@@ -25,7 +30,7 @@ func GetBuildFooter() *C.char {
 	s := new(strings.Builder)
 	for k, v := range build.Footer {
 		s.WriteString(k)
-		s.WriteRune('^')
+		s.WriteRune(keySp)
 		s.WriteString(v)
 	}
 	return C.CString(s.String())
@@ -36,7 +41,7 @@ func GetBuildBanner() *C.char {
 	s := new(strings.Builder)
 	for k, v := range build.Banner {
 		s.WriteString(k)
-		s.WriteRune('^')
+		s.WriteRune(keySp)
 		s.WriteString(v)
 	}
 	return C.CString(s.String())
@@ -47,7 +52,7 @@ func GetBuildOutExtensions() *C.char {
 	s := new(strings.Builder)
 	for k, v := range build.OutExtensions {
 		s.WriteString(k)
-		s.WriteRune('^')
+		s.WriteRune(keySp)
 		s.WriteString(v)
 	}
 	return C.CString(s.String())
@@ -56,91 +61,91 @@ func GetBuildOutExtensions() *C.char {
 //export GetBuildWrite
 func GetBuildWrite() C.int {
 	if build.Write {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildIncremental
 func GetBuildIncremental() C.int {
 	if build.Write {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildAllowOverwrite
 func GetBuildAllowOverwrite() C.int {
 	if build.Write {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
-//export BuildPublicPath
+//export GetBuildPublicPath
 func GetBuildPublicPath() *C.char {
 	return C.CString(build.PublicPath)
 }
 
-//export BuildAssetNames
+//export GetBuildAssetNames
 func GetBuildAssetNames() *C.char { return C.CString(build.AssetNames) }
 
-//export BuildChunkNames
+//export GetBuildChunkNames
 func GetBuildChunkNames() *C.char { return C.CString(build.ChunkNames) }
 
 //export GetBuildResolveExtensions
 func GetBuildResolveExtensions() *C.char {
-	return C.CString(strings.Join(build.ResolveExtensions, ","))
+	return C.CString(strings.Join(build.ResolveExtensions, arrSpS))
 }
 
 //export GetBuildEntryPoints
-func GetBuildEntryPoints() *C.char { return C.CString(strings.Join(build.EntryPoints, ",")) }
+func GetBuildEntryPoints() *C.char { return C.CString(strings.Join(build.EntryPoints, arrSpS)) }
 
 //export GetBuildNodePaths
-func GetBuildNodePaths() *C.char { return C.CString(strings.Join(build.NodePaths, ",")) }
+func GetBuildNodePaths() *C.char { return C.CString(strings.Join(build.NodePaths, arrSpS)) }
 
 //export GetBuildInject
-func GetBuildInject() *C.char { return C.CString(strings.Join(build.Inject, ",")) }
+func GetBuildInject() *C.char { return C.CString(strings.Join(build.Inject, arrSpS)) }
 
 //export GetBuildConditions
-func GetBuildConditions() *C.char { return C.CString(strings.Join(build.Conditions, ",")) }
+func GetBuildConditions() *C.char { return C.CString(strings.Join(build.Conditions, arrSpS)) }
 
 //export GetBuildExternal
-func GetBuildExternal() *C.char { return C.CString(strings.Join(build.External, ",")) }
+func GetBuildExternal() *C.char { return C.CString(strings.Join(build.External, arrSpS)) }
 
 //export GetBuildMainFields
-func GetBuildMainFields() *C.char { return C.CString(strings.Join(build.MainFields, ",")) }
+func GetBuildMainFields() *C.char { return C.CString(strings.Join(build.MainFields, arrSpS)) }
 
 //export GetBuildBundle
 func GetBuildBundle() C.int {
 	if build.Bundle {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildPreserveSymlinks
 func GetBuildPreserveSymlinks() C.int {
 	if build.PreserveSymlinks {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildSplitting
 func GetBuildSplitting() C.int {
 	if build.Splitting {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildMetafile
 func GetBuildMetafile() C.int {
 	if build.Metafile {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildTsconfig
@@ -241,7 +246,7 @@ func BuildCleanOutExtensions() {
 }
 
 //export  BuildAddEntryPointsAdvanced
-func BuildAddEntryPointsAdvanced(k, v *C.Char) {
+func BuildAddEntryPointsAdvanced(k, v *C.char) {
 	build.EntryPointsAdvanced = append(build.EntryPointsAdvanced, api.EntryPoint{
 		InputPath:  C.GoString(k),
 		OutputPath: C.GoString(v),
@@ -269,17 +274,17 @@ func BuildAllowOverwrite(v C.int) {
 }
 
 //export  BuildPublicPath
-func BuildPublicPath(v *C.Char) {
+func BuildPublicPath(v *C.char) {
 	build.PublicPath = C.GoString(v)
 }
 
 //export  BuildAssetNames
-func BuildAssetNames(v *C.Char) {
+func BuildAssetNames(v *C.char) {
 	build.AssetNames = C.GoString(v)
 }
 
 //export  BuildChunkNames
-func BuildChunkNames(v *C.Char) {
+func BuildChunkNames(v *C.char) {
 	build.ChunkNames = C.GoString(v)
 }
 
@@ -374,27 +379,27 @@ func BuildMetafile(v C.int) {
 }
 
 //export  BuildTsconfig
-func BuildTsconfig(v *C.Char) {
+func BuildTsconfig(v *C.char) {
 	build.Tsconfig = C.GoString(v)
 }
 
 //export  BuildOutfile
-func BuildOutfile(v *C.Char) {
+func BuildOutfile(v *C.char) {
 	build.Outfile = C.GoString(v)
 }
 
 //export  BuildAbsWorkingDir
-func BuildAbsWorkingDir(v *C.Char) {
+func BuildAbsWorkingDir(v *C.char) {
 	build.AbsWorkingDir = C.GoString(v)
 }
 
 //export  BuildOutDir
-func BuildOutDir(v *C.Char) {
+func BuildOutDir(v *C.char) {
 	build.Outdir = C.GoString(v)
 }
 
 //export  BuildOutBase
-func BuildOutBase(v *C.Char) {
+func BuildOutBase(v *C.char) {
 	build.Outbase = C.GoString(v)
 }
 
@@ -549,9 +554,9 @@ func BuildCleanPure() {
 //export BuildKeepNames
 func BuildKeepNames() C.int {
 	if build.KeepNames {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export  GetBuildColor
@@ -612,25 +617,25 @@ func GetBuildDrop() C.int {
 //export GetBuildMinifyWhitespace
 func GetBuildMinifyWhitespace() C.int {
 	if build.MinifyWhitespace {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildMinifyIdentifiers
 func GetBuildMinifyIdentifiers() C.int {
 	if build.MinifyIdentifiers {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildMinifySyntax
 func GetBuildMinifySyntax() C.int {
 	if build.MinifySyntax {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildCharset
@@ -646,9 +651,9 @@ func GetBuildTreeShaking() C.int {
 //export GetBuildIgnoreAnnotations
 func GetBuildIgnoreAnnotations() C.int {
 	if build.IgnoreAnnotations {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
 
 //export GetBuildLegalComments
@@ -674,7 +679,7 @@ func GetBuildJSXFragment() *C.char {
 //export GetBuildKeepNames
 func GetBuildKeepNames() C.int {
 	if build.KeepNames {
-		return C.int(1)
+		return True
 	}
-	return C.int(0)
+	return False
 }
