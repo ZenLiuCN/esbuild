@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public interface EsBuild {
     Build buildConfig = Build.$i;
-    Transform TransformConfig = Transform.$i;
+    Transform Transform = Transform.$i;
 
     final class Build {
         final static Build $i = new Build();

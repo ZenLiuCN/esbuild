@@ -16,33 +16,22 @@ package main;
 import cn.zenliu.java.esbuild.*;
 
 public class Main {
-    public static void main(String[] args) {
-        utilStyle();
-        instanceStyle();
-    }
+   public static void main(String[] args) {
+      instanceStyle();
+   }
 
-    static void utilStyle() {
-        EsBuild.transformMinifyIdentifiers(true);
-        EsBuild.transformMinifySyntax(true);
-        EsBuild.transformMinifyWhitespace(true);
-        EsBuild.transformLoader(Loader.TS);
-        EsBuild.transformTarget(Target.ES2015);
-        EsBuild.transformFormat(Format.ESModule);
-        TransformResult result = EsBuild.transform("export const a=1;");
-        System.out.println(result);
-    }
-
-    static void instanceStyle() {
-        TransformResult result = EsBuild.instance()
-                .transformMinifyIdentifiers(true)
-                .transformMinifySyntax(true)
-                .transformMinifyWhitespace(true)
-                .transformLoader(Loader.TS)
-                .transformTarget(Target.ES2015)
-                .transformFormat(Format.ESModule)
-                .transform("export const a=1;");
-       System.out.println(result);
-    }
+   static void instanceStyle() {
+      TransformResult result = EsBuild.Transform.reset()
+              .setLoader(Loader.JS)
+              .setTarget(Target.ES2015)
+              .setFormat(Format.ESModule)
+              .setMinifyIdentifiers(true)
+              .setMinifySyntax(true)
+              .setMinifyWhitespace(true)
+              .setSourceMap(SourceMap.Inline)
+              .transform("export const x=1");
+      System.out.println(result);
+   }
 }
 ```
 
